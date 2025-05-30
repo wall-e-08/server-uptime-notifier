@@ -84,6 +84,27 @@ sudo systemctl enable monitoring.service
 sudo systemctl start monitoring.service
 ```
 
+## 🧩 Common issues
+### 1. 🔒 ICMP (ping) is blocked by a firewall
+Check with `sudo ufw status verbose` or `sudo iptables -L -n | grep icmp`
+
+### ✅ Fix (firewall):
+```shell
+sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+```
+or
+```shell
+sudo ufw allow proto icmp
+```
+
+### 2. ☁️ Cloud provider blocks ICMP
+### ✅ Fix (Cloud provider):
+- Find the security group, firewall rule, or network ACL
+- Allow ICMP Echo Request (type 8) inbound
+- Or check provider's documentation
+
+### 3. 🌐 CMP filtered at the network level (router/gateway)
+
 ## 🔮 Upcoming features:
 - ~~Dockerize~~
 - ![](https://img.shields.io/badge/-%230087CC.svg?logo=telegram&logoColor=white) Telegram

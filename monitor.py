@@ -29,25 +29,30 @@ def monitor_server():
   if not is_valid_ipv4(PING_TO_IP):
     logger.critical("Wrong ipv4 pattern! Found: `%s`!", PING_TO_IP)
     return
+  logger.info("Interval set to %ss", PING_INTERVAL)
   last_status = True  # Assume server is initially up
 
   while True:
     current_status = False
-    retries = 0
+    timestamp = get_local_time()
 
     # Try pinging multiple times to confirm status
+    retries = 0
+    retry_interval = 10
     while retries < MAX_RETRIES and not current_status:
       current_status = is_server_reachable(PING_TO_IP)
       if not current_status:
-        time.sleep(10)  # Wait 10 seconds before retrying
+        logger.warning("Ping failed at %s. Retrying in %ss (%s)",
+                       timestamp, retry_interval, retries + 1)
+        time.sleep(retry_interval)  # Wait before retrying
+      else:
+        logger.info("Ping ok! Time: %s", timestamp)
       retries += 1
-
-    timestamp = get_local_time()
 
     if current_status:
       if not last_status:
         # Server came back online
-        log_online = f"Server {PING_TO_IP} is now reachable as of {timestamp}"
+        log_online = f"Server {PING_TO_IP} is now reachable. Time: {timestamp}"
         logger.info(log_online)
         send_notification("Server Status Alert", log_online)
     else:
