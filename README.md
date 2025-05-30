@@ -19,31 +19,40 @@ A lightweight Python monitoring and notifier tool that tracks server availabilit
 ## 🛠️ Installation (Local)
 
 1. Clone the repository:
-```bash
+```shell
 git clone https://github.com/wall-e-08/server-uptime-notifier.git
 cd server-uptime-notifier
 ```
 
 2. Set up virtual environment:
-```bash
+```shell
 python -m venv env
 source env/bin/activate  # Linux/Mac
 # venv\Scripts\activate  # Windows
 ```
 
 3. Install dependencies:
-```bash
+```shell
 pip install -r requirements.txt
 ```
 
 4. Copy `.env.example` to `.env` file and update as required
 5. Run it
-```bash
+```shell
 python main.py
 ```
 Log file location is inside project directory: `/project/path/notification.log`
 
-## 🖥️ Server Setup
+## ![](https://img.shields.io/badge/-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white&style=flat) Docker
+```shell
+docker run -d --env-file .env --name container_name imag_name
+```
+### View logs
+```shell
+docker exec container_name tail -f /app/notifications.log
+```
+
+## 🖥️ Server Setup Manually
 
 1. Repeat `1` to `4` from `Installation (Local)` in your server
 2. Create a Systemd Service:
@@ -66,14 +75,14 @@ Environment=PYTHONPATH=/path/to/your/project
 WantedBy=multi-user.target
 ```
 3. Enable and start:
-```bash
+```shell
 sudo systemctl daemon-reload
 sudo systemctl enable monitoring.service
 sudo systemctl start monitoring.service
 ```
 
 ## 🔮 Upcoming features:
-- Dockerize
+- ~~Dockerize~~
 - ![Telegram](https://img.shields.io/badge/Telegram-%230087CC.svg?logo=telegram&logoColor=white)
 , ![Slack](https://img.shields.io/badge/Slack-%237A42F4.svg?logo=slack&logoColor=white)
  etc. notification

@@ -6,7 +6,7 @@ def init_configure_logging(enable=True):
     return
   logging.basicConfig(
     level=logging.DEBUG,
-    format='%(asctime)s - %(levelname)-10s: %(name)-20s -> %(message)s',
+    format='%(asctime)s - %(levelname)-10s: %(message)s',
     handlers=[
       logging.StreamHandler(),
       logging.FileHandler('notifications.log')
