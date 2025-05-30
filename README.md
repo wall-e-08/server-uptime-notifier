@@ -64,17 +64,20 @@ After=network.target
 
 [Service]
 User=youruser
+Group=yourgroup
 WorkingDirectory=/path/to/your/project
 ExecStart=/path/to/your/project/env/bin/python main.py
 Restart=always
 RestartSec=10
-Environment=PATH=/path/to/your/project/venv/bin:/usr/bin
-Environment=PYTHONPATH=/path/to/your/project
 
 [Install]
 WantedBy=multi-user.target
 ```
-3. Enable and start:
+3. Add permission:
+```shell
+sudo chown -R youruser:yourgroup /path/to/your/project
+```
+3. Enable the system and start:
 ```shell
 sudo systemctl daemon-reload
 sudo systemctl enable monitoring.service
@@ -83,8 +86,8 @@ sudo systemctl start monitoring.service
 
 ## 🔮 Upcoming features:
 - ~~Dockerize~~
-- ![Telegram](https://img.shields.io/badge/Telegram-%230087CC.svg?logo=telegram&logoColor=white)
-, ![Slack](https://img.shields.io/badge/Slack-%237A42F4.svg?logo=slack&logoColor=white)
+- ![](https://img.shields.io/badge/-%230087CC.svg?logo=telegram&logoColor=white) Telegram
+, ![](https://img.shields.io/badge/-%237A42F4.svg?logo=slack&logoColor=white) Slack
  etc. notification
 
 ## ⚠️ Important Note
